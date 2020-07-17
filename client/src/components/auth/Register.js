@@ -5,15 +5,67 @@ import { setAlert } from '../../actions/alert';
 import { register } from '../../actions/auth';
 import PropTypes from 'prop-types';
 
+// Material UI
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import Copyright from '../layout/Copyright';
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(3),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+  link: {
+    textDecoration: 'none',
+  },
+}));
+
 const Register = ({ setAlert, register, isAuthenticated }) => {
+  const classes = useStyles();
+
   const [formData, setFormData] = useState({
-    name: '',
+    firstname: '',
+    lastname: '',
     email: '',
     password: '',
     password2: '',
+    country: '',
+    city: '',
+    age: '',
   });
 
-  const { name, email, password, password2 } = formData;
+  const {
+    firstname,
+    lastname,
+    email,
+    password,
+    password2,
+    country,
+    city,
+    age,
+  } = formData;
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,7 +75,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     if (password !== password2) {
       setAlert('Password do not match', 'danger');
     } else {
-      register({ name, email, password });
+      register({ email, password, firstname, lastname, country, city, age });
     }
   };
 
@@ -32,60 +84,150 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
   }
 
   return (
-    <Fragment>
-      <section className='container'>
-        <h1 className='large text-primary'>Sign Up</h1>
-        <p className='lead'>
-          <i className='fas fa-user'></i> Create Your Account
-        </p>
-        <form className='form' onSubmit={(e) => onSubmit(e)}>
-          <div className='form-group'>
-            <input
-              type='text'
-              placeholder='Name'
-              name='name'
-              value={name}
-              onChange={(e) => onChange(e)}
-            />
-          </div>
-          <div className='form-group'>
-            <input
-              type='email'
-              placeholder='Email Address'
-              name='email'
-              value={email}
-              onChange={(e) => onChange(e)}
-            />
-            <small className='form-text'>
-              This site uses Gravatar so if you want a profile image, use a
-              Gravatar email
-            </small>
-          </div>
-          <div className='form-group'>
-            <input
-              type='password'
-              placeholder='Password'
-              name='password'
-              value={password}
-              onChange={(e) => onChange(e)}
-            />
-          </div>
-          <div className='form-group'>
-            <input
-              type='password'
-              placeholder='Confirm Password'
-              name='password2'
-              value={password2}
-              onChange={(e) => onChange(e)}
-            />
-          </div>
-          <input type='submit' className='btn btn-primary' value='Register' />
+    <Container component='main' maxWidth='xs'>
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}></Avatar>
+        <Typography component='h1' variant='h5'>
+          Sign up
+        </Typography>
+        <form className={classes.form} onSubmit={(e) => onSubmit(e)} noValidate>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                autoComplete='fname'
+                name='firstname'
+                value={firstname}
+                onChange={(e) => onChange(e)}
+                variant='outlined'
+                required
+                fullWidth
+                id='firstName'
+                label='First Name'
+                autoFocus
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                autoComplete='fname'
+                name='lastname'
+                value={lastname}
+                onChange={(e) => onChange(e)}
+                variant='outlined'
+                required
+                fullWidth
+                id='firstName'
+                label='Last Name'
+                autoFocus
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant='outlined'
+                required
+                fullWidth
+                id='email'
+                label='Email Address'
+                name='email'
+                value={email}
+                onChange={(e) => onChange(e)}
+                autoComplete='email'
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant='outlined'
+                required
+                fullWidth
+                name='password'
+                value={password}
+                onChange={(e) => onChange(e)}
+                label='Password'
+                type='password'
+                id='password'
+                autoComplete='current-password'
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant='outlined'
+                required
+                fullWidth
+                name='password2'
+                value={password2}
+                onChange={(e) => onChange(e)}
+                label='Repeat Password'
+                type='password'
+                id='password'
+                autoComplete='current-password'
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                autoComplete='fname'
+                name='country'
+                value={country}
+                onChange={(e) => onChange(e)}
+                variant='outlined'
+                required
+                fullWidth
+                id='firstName'
+                label='Country'
+                autoFocus
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                autoComplete='fname'
+                name='city'
+                value={city}
+                onChange={(e) => onChange(e)}
+                variant='outlined'
+                required
+                fullWidth
+                id='firstName'
+                label='City'
+                autoFocus
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                autoComplete='fname'
+                name='age'
+                value={age}
+                onChange={(e) => onChange(e)}
+                variant='outlined'
+                required
+                fullWidth
+                id='firstName'
+                label='Age'
+                autoFocus
+              />
+            </Grid>
+          </Grid>
+          <Button
+            type='submit'
+            fullWidth
+            variant='contained'
+            color='primary'
+            className={classes.submit}
+          >
+            Sign Up
+          </Button>
+          <Grid container justify='flex-end'>
+            <Grid item>
+              {'Already have an account?  '}
+              <Link to='/login' className={classes.link}>
+                Sign In
+              </Link>
+            </Grid>
+          </Grid>
         </form>
-        <p className='my-1'>
-          Already have an account? <Link to='/login'>Sign In</Link>
-        </p>
-      </section>
-    </Fragment>
+      </div>
+      <Box mt={5}>
+        <Copyright />
+      </Box>
+    </Container>
   );
 };
 

@@ -8,6 +8,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  GET_ALL_PROFILES,
 } from './types';
 import setAuthToken from '../utils/setAuthToken';
 
@@ -24,7 +25,16 @@ export const loadUser = () => async (dispatch) => {
       type: USER_LOADED,
       payload: res.data,
     });
+
+    const res1 = await axios.get('/api/users/all');
+    dispatch({
+      type: GET_ALL_PROFILES,
+      payload: res1.data,
+    });
+    console.log('actions dispatched');
   } catch (err) {
+    // Jesli nie ma membershipu i nie uda nam sie dostac profili to tutaj przejdziemy ale nie chcemy go wylogowywac
+    if (err.message == 'Request failed with status code 403') return;
     dispatch({
       type: AUTH_ERROR,
     });
@@ -32,13 +42,29 @@ export const loadUser = () => async (dispatch) => {
 };
 
 // Register User
-export const register = ({ name, email, password }) => async (dispatch) => {
+export const register = ({
+  email,
+  password,
+  firstname,
+  lastname,
+  country,
+  city,
+  age,
+}) => async (dispatch) => {
   const config = {
     headers: {
       'Content-Type': 'application/json',
     },
   };
-  const body = JSON.stringify({ name, email, password });
+  const body = JSON.stringify({
+    email,
+    password,
+    firstname,
+    lastname,
+    country,
+    city,
+    age,
+  });
 
   try {
     const res = await axios.post('/api/users', body, config);

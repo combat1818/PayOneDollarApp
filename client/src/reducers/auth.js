@@ -6,6 +6,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  GET_ALL_PROFILES,
 } from '../actions/types';
 
 const initialState = {
@@ -13,6 +14,7 @@ const initialState = {
   isAuthenticated: null,
   loading: true,
   user: null,
+  users: null,
 };
 
 export default function (state = initialState, action) {
@@ -35,6 +37,11 @@ export default function (state = initialState, action) {
         isAuthenticated: true,
         loading: false,
       };
+    case GET_ALL_PROFILES:
+      return {
+        ...state,
+        users: payload,
+      };
     case REGISTER_FAIL:
     case AUTH_ERROR:
     case LOGIN_FAIL:
@@ -45,6 +52,8 @@ export default function (state = initialState, action) {
         token: null,
         isAuthenticated: false,
         loading: false,
+        user: null,
+        users: null,
       };
     default:
       return state;
