@@ -39,7 +39,6 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
     <ul className={classes.ul}>
       <li>
         <Link onClick={logout} to='/#!' className={classes.link}>
-          <i className='fas fa-sign-out-alt'></i>{' '}
           <span className='hide-sm'>Logout</span>
         </Link>
       </li>

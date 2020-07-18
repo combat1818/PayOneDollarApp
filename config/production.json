@@ -1,0 +1,4 @@
+{
+  "mongoURI": "mongodb+srv://olek123:olek123@socialappcluster.fn9iq.mongodb.net/<dbname>?retryWrites=true&w=majority",
+  "jwtSecret": "haloKarthus"
+}

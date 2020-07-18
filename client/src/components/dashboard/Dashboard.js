@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getAllProfiles } from '../../actions/profile';
@@ -70,6 +71,13 @@ const useStyles = makeStyles((theme) => ({
         ? theme.palette.grey[200]
         : theme.palette.grey[800],
   },
+  link: {
+    textDecoration: 'none',
+    color: 'black',
+    fontSize: 32,
+    backgroundColor: '#fcba03',
+    borderRadius: 10,
+  },
 }));
 
 const Dashboard = ({ profile, profiles }) => {
@@ -102,6 +110,10 @@ const Dashboard = ({ profile, profiles }) => {
             {profile != null && parseInt(profile.membership) >= 1
               ? bronzeMembership
               : '?'}
+            <br />
+            <Link to='/pricing' className={classes.link}>
+              Get access
+            </Link>
           </Paper>
         </Grid>
         <Grid item>
