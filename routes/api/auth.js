@@ -50,6 +50,14 @@ router.post(
           .json({ errors: [{ msg: 'Invalid Credentials' }] });
       }
 
+      // Sprawdzamy czy dla subskrypcji 1$ minely 3 dni przy logowaniu
+      if (Date.now() - Date.parse(user.date) >= 3) {
+        if (user.membership == '1') {
+          user.membership = '0';
+          user.save();
+        }
+      }
+
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
         return res

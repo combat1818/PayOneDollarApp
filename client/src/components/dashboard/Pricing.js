@@ -38,6 +38,8 @@ export default Pricing;
 // React + Stripe
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import { loadStripe } from '@stripe/stripe-js';
 
@@ -188,9 +190,8 @@ function Copyright() {
   );
 }
 
-function Pricing() {
+function Pricing({ profile }) {
   const classes = useStyles();
-
   const handleClick = async (event) => {
     // Wazne zeby dac currentTarget, zwykly target zwraca spana w srodku buttona
     //console.log(event.currentTarget.id);
@@ -201,6 +202,7 @@ function Pricing() {
     const response = await axios.get('/id', {
       params: {
         price: chosenPrice,
+        user: profile.email,
       },
     });
     const sessionId = response.data.session_id;
@@ -327,4 +329,8 @@ function Pricing() {
   );
 }
 
-export default Pricing;
+const mapStateToProps = (state) => ({
+  profile: state.auth.user,
+});
+
+export default connect(mapStateToProps)(Pricing);

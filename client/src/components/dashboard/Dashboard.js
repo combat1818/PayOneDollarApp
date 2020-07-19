@@ -91,7 +91,6 @@ const Dashboard = ({ profile, profiles }) => {
       else if (profile.membership == '2') silverMembership++;
       else if (profile.membership == '3') goldMembership++;
     });
-    console.log(goldMembership);
   }
   return (
     <div className={classes.root}>
