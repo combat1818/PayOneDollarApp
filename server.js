@@ -90,7 +90,7 @@ app.post(
         user.date = Date.now();
         user.save();
       } catch (err) {
-        res.status(500).send('Server error');
+        response.status(500).send('Server error');
       }
     }
     // Return a response to acknowledge receipt of the event

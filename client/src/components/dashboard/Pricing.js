@@ -38,10 +38,13 @@ export default Pricing;
 // React + Stripe
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { loadStripe } from '@stripe/stripe-js';
+
+import Navbar from '../layout/Navbar';
 
 // Material UI
 import Button from '@material-ui/core/Button';
@@ -53,11 +56,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
-
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
 const stripePromise = loadStripe(
@@ -82,7 +83,9 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   link: {
-    margin: theme.spacing(1, 1.5),
+    padding: 20,
+    textDecoration: 'none',
+    fontSize: 20,
   },
   heroContent: {
     padding: theme.spacing(8, 0, 6),
@@ -222,6 +225,7 @@ function Pricing({ profile }) {
   return (
     <React.Fragment>
       <CssBaseline />
+      <Navbar backIcon={true} />
       {/* Hero unit */}
       <Container maxWidth='sm' component='main' className={classes.heroContent}>
         <Typography

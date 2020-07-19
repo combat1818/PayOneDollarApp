@@ -40,6 +40,34 @@ const useStyles = makeStyles((theme) => ({
     margin: 10,
     textAlign: 'center',
   },
+  counterHeader: {
+    height: 40,
+    backgroundColor: '#3f51b5',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 25,
+    color: 'white',
+  },
+  counterContent: {
+    display: 'flex',
+    flexGrow: 1,
+    height: 110,
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 80,
+  },
+  counterLink: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 30,
+    fontSize: 20,
+    backgroundColor: '#586fed',
+    borderRadius: 20,
+    margin: 15,
+    color: 'white',
+  },
   sections: {
     flexGrow: 2,
     display: 'flex',
@@ -73,10 +101,6 @@ const useStyles = makeStyles((theme) => ({
   },
   link: {
     textDecoration: 'none',
-    color: 'black',
-    fontSize: 32,
-    backgroundColor: '#fcba03',
-    borderRadius: 10,
   },
 }));
 
@@ -106,27 +130,53 @@ const Dashboard = ({ profile, profiles }) => {
       >
         <Grid item>
           <Paper className={classes.card} elevation={5}>
-            {profile != null && parseInt(profile.membership) >= 1
-              ? bronzeMembership
-              : '?'}
-            <br />
-            <Link to='/pricing' className={classes.link}>
-              Get access
-            </Link>
+            <div className={classes.counterHeader}>Bronze Members:</div>
+            <div className={classes.counterContent}>
+              {profile != null && parseInt(profile.membership) >= 1
+                ? bronzeMembership
+                : '?'}
+            </div>
+            {profile != null && parseInt(profile.membership) < 1 ? (
+              <Link to='/pricing' className={classes.link}>
+                <div className={classes.counterLink}>Upgrade</div>
+              </Link>
+            ) : (
+              ''
+            )}
           </Paper>
         </Grid>
         <Grid item>
           <Paper className={classes.card} elevation={5}>
-            {profile != null && parseInt(profile.membership) >= 2
-              ? silverMembership
-              : '?'}
+            <div className={classes.counterHeader}>Silver Members:</div>
+            <div className={classes.counterContent}>
+              {profile != null && parseInt(profile.membership) >= 2
+                ? silverMembership
+                : '?'}
+            </div>
+            {profile != null && parseInt(profile.membership) < 2 ? (
+              <Link to='/pricing' className={classes.link}>
+                <div className={classes.counterLink}>Upgrade</div>
+              </Link>
+            ) : (
+              ''
+            )}
           </Paper>
         </Grid>
         <Grid item>
           <Paper className={classes.card} elevation={5}>
-            {profile != null && parseInt(profile.membership) >= 3
-              ? goldMembership
-              : '?'}
+            <div className={classes.counterHeader}>Gold Members:</div>
+            <div className={classes.counterContent}>
+              {profile != null && parseInt(profile.membership) >= 3
+                ? goldMembership
+                : '?'}
+            </div>
+            {profile != null && parseInt(profile.membership) < 3 ? (
+              <Link to='/pricing' className={classes.link}>
+                <div className={classes.counterLink}>Upgrade</div>
+              </Link>
+            ) : (
+              ''
+            )}
           </Paper>
         </Grid>
       </Grid>
