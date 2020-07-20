@@ -24,7 +24,6 @@ app.use((req, res, next) => {
     console.log('info od stripa');
     next();
   } else {
-    console.log('inne info');
     bodyParser.json()(req, res, next);
   }
 });

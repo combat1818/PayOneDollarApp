@@ -5,6 +5,8 @@ import { setAlert } from '../../actions/alert';
 import { register } from '../../actions/auth';
 import PropTypes from 'prop-types';
 
+import { COUNTRIES } from '../../utils/Countries';
+
 // Material UI
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -18,6 +20,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Copyright from '../layout/Copyright';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -67,8 +70,9 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     age,
   } = formData;
 
-  const onChange = (e) =>
+  const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -166,6 +170,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
               <TextField
                 autoComplete='fname'
                 name='country'
+                select
                 value={country}
                 onChange={(e) => onChange(e)}
                 variant='outlined'
@@ -174,7 +179,13 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                 id='firstName'
                 label='Country'
                 autoFocus
-              />
+              >
+                {COUNTRIES.map((country) => (
+                  <MenuItem key={country.code} value={country.name}>
+                    {country.name}
+                  </MenuItem>
+                ))}
+              </TextField>
             </Grid>
             <Grid item xs={12}>
               <TextField
