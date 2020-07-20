@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
     minWidth: '100vw',
     display: 'flex',
     flexDirection: 'column',
+    backgroundColor: '#fcba03',
   },
   nav: {},
   counters: { flexGrow: 0 },
@@ -72,19 +73,42 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 2,
     display: 'flex',
   },
+  sectionHeader: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 40,
+    fontSize: 35,
+    backgroundColor: '#3f51b5',
+    color: 'white',
+    margin: 10,
+    borderRadius: 10,
+  },
   section1: {
     flex: 1,
-    minHeight: 300,
+    minHeight: 400,
     margin: 10,
-    backgroundImage: `url(${Image1})`,
-    backgroundSize: 'cover',
+    //backgroundImage: `url(${Image1})`,
+    //backgroundSize: 'cover',
   },
   section2: {
     flex: 1,
-    minHeight: 300,
+    minHeight: 400,
     margin: 10,
-    backgroundImage: `url(${Image2})`,
-    backgroundSize: 'cover',
+    //backgroundImage: `url(${Image2})`,
+    //backgroundSize: 'cover',
+  },
+  image: {
+    width: '100%',
+    height: 400,
+    objectFit: 'contain',
+  },
+  imageContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   tfContainer: {
     flexGrow: 0,
@@ -183,10 +207,24 @@ const Dashboard = ({ profile, profiles }) => {
 
       <Grid container className={classes.sections} alignItems='center'>
         <Grid item md={6} xs={12}>
-          <Paper elevation={5} className={classes.section1}></Paper>
+          <Paper elevation={5} className={classes.section1}>
+            <Link to='/analytics' className={classes.link}>
+              <div className={classes.sectionHeader}>Analytics</div>
+              <div className={classes.imageContainer}>
+                <img src={Image1} className={classes.image}></img>
+              </div>
+            </Link>
+          </Paper>
         </Grid>
         <Grid item md={6} xs={12}>
-          <Paper elevation={5} className={classes.section2}></Paper>
+          <Paper elevation={5} className={classes.section2}>
+            <Link to='/worldmap' className={classes.link}>
+              <div className={classes.sectionHeader}>World Map</div>
+              <div className={classes.imageContainer}>
+                <img src={Image2} className={classes.image}></img>
+              </div>
+            </Link>
+          </Paper>
         </Grid>
       </Grid>
 
