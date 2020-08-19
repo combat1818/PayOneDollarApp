@@ -294,38 +294,39 @@ function createHeatMap(props, heatValue) {
     element.name = findCountry(element.id);
   });
   //console.log(props.location.state.countriesData);
+  if (props.location.state.countriesData !== null) {
+    props.location.state.countriesData.forEach((profile) => {
+      let id = findId(profile.country);
 
-  props.location.state.countriesData.forEach((profile) => {
-    let id = findId(profile.country);
+      if (id != null) {
+        let country = polygonSeries.data.find((country) => {
+          return country.id == id;
+        });
 
-    if (id != null) {
-      let country = polygonSeries.data.find((country) => {
-        return country.id == id;
-      });
-
-      if (country !== undefined) {
-        if (profile.membership == 1) {
-          if (country.valueBronze === undefined) {
-            country.valueBronze = 1;
-          } else {
-            country.valueBronze++;
-          }
-        } else if (profile.membership == 2) {
-          if (country.valueSilver === undefined) {
-            country.valueSilver = 1;
-          } else {
-            country.valueSilver++;
-          }
-        } else if (profile.membership == 3) {
-          if (country.valueGold === undefined) {
-            country.valueGold = 1;
-          } else {
-            country.valueGold++;
+        if (country !== undefined) {
+          if (profile.membership == 1) {
+            if (country.valueBronze === undefined) {
+              country.valueBronze = 1;
+            } else {
+              country.valueBronze++;
+            }
+          } else if (profile.membership == 2) {
+            if (country.valueSilver === undefined) {
+              country.valueSilver = 1;
+            } else {
+              country.valueSilver++;
+            }
+          } else if (profile.membership == 3) {
+            if (country.valueGold === undefined) {
+              country.valueGold = 1;
+            } else {
+              country.valueGold++;
+            }
           }
         }
       }
-    }
-  });
+    });
+  }
 
   // MEGA WAZNE BO DZIALA
   if (heatValue === 1) {
