@@ -218,7 +218,17 @@ const Dashboard = ({ profile, profiles }) => {
         </Grid>
         <Grid item md={6} xs={12}>
           <Paper elevation={5} className={classes.section2}>
-            <Link to='/worldmap' className={classes.link}>
+            <Link
+              to={{
+                pathname: '/worldmap',
+                state: {
+                  cardHeading: 'This is a heading',
+                  cardDesc: 'Description',
+                  countriesData: profiles,
+                },
+              }}
+              className={classes.link}
+            >
               <div className={classes.sectionHeader}>World Map</div>
               <div className={classes.imageContainer}>
                 <img src={Image2} className={classes.image}></img>
