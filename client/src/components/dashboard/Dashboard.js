@@ -208,7 +208,15 @@ const Dashboard = ({ profile, profiles }) => {
       <Grid container className={classes.sections} alignItems='center'>
         <Grid item md={6} xs={12}>
           <Paper elevation={5} className={classes.section1}>
-            <Link to='/analytics' className={classes.link}>
+            <Link
+              to={{
+                pathname: '/analytics',
+                state: {
+                  countriesData: profiles,
+                },
+              }}
+              className={classes.link}
+            >
               <div className={classes.sectionHeader}>Analytics</div>
               <div className={classes.imageContainer}>
                 <img src={Image1} className={classes.image}></img>
@@ -222,8 +230,6 @@ const Dashboard = ({ profile, profiles }) => {
               to={{
                 pathname: '/worldmap',
                 state: {
-                  cardHeading: 'This is a heading',
-                  cardDesc: 'Description',
                   countriesData: profiles,
                 },
               }}
