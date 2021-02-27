@@ -55,6 +55,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     password: '',
     password2: '',
     country: '',
+    flag: '',
     city: '',
     age: '',
   });
@@ -66,12 +67,14 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     password,
     password2,
     country,
+    flag,
     city,
     age,
   } = formData;
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    console.log(formData);
   };
 
   const onSubmit = (e) => {
@@ -79,7 +82,16 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     if (password !== password2) {
       setAlert('Password do not match', 'danger');
     } else {
-      register({ email, password, firstname, lastname, country, city, age });
+      register({
+        email,
+        password,
+        firstname,
+        lastname,
+        country,
+        flag,
+        city,
+        age,
+      });
     }
   };
 
@@ -108,7 +120,6 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                 fullWidth
                 id='firstName'
                 label='First Name'
-                autoFocus
               />
             </Grid>
             <Grid item xs={12}>
@@ -122,7 +133,6 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                 fullWidth
                 id='firstName'
                 label='Last Name'
-                autoFocus
               />
             </Grid>
             <Grid item xs={12}>
@@ -178,13 +188,29 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                 fullWidth
                 id='firstName'
                 label='Country'
-                autoFocus
               >
                 {COUNTRIES.map((country) => (
                   <MenuItem key={country.code} value={country.name}>
                     {country.name}
                   </MenuItem>
                 ))}
+              </TextField>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                autoComplete='fname'
+                name='flag'
+                value={flag}
+                select
+                onChange={(e) => onChange(e)}
+                variant='outlined'
+                required
+                fullWidth
+                id='firstName'
+                label='Flag'
+              >
+                <MenuItem value={'Male'}>Male</MenuItem>
+                <MenuItem value={'Female'}>Female</MenuItem>
               </TextField>
             </Grid>
             <Grid item xs={12}>
@@ -198,7 +224,6 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                 fullWidth
                 id='firstName'
                 label='City'
-                autoFocus
               />
             </Grid>
             <Grid item xs={12}>
@@ -212,7 +237,6 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                 fullWidth
                 id='firstName'
                 label='Age'
-                autoFocus
               />
             </Grid>
           </Grid>

@@ -26,6 +26,7 @@ router.post(
     check('firstname', 'Firstname is required').not().isEmpty(),
     check('lastname', 'Lastname is required').not().isEmpty(),
     check('country', 'Country is required').not().isEmpty(),
+    check('flag', 'Flag is required').not().isEmpty(),
     check('city', 'City is required').not().isEmpty(),
     check('age', 'Age is required').not().isEmpty(),
   ],
@@ -40,6 +41,7 @@ router.post(
       firstname,
       lastname,
       country,
+      flag,
       city,
       age,
     } = req.body;
@@ -68,6 +70,7 @@ router.post(
         firstname,
         lastname,
         country,
+        flag,
         city,
         age,
         membership,

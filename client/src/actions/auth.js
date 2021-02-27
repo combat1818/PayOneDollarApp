@@ -48,6 +48,7 @@ export const register = ({
   firstname,
   lastname,
   country,
+  flag,
   city,
   age,
 }) => async (dispatch) => {
@@ -62,6 +63,7 @@ export const register = ({
     firstname,
     lastname,
     country,
+    flag,
     city,
     age,
   });
