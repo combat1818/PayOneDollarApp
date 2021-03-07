@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -8,6 +8,9 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
+
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 const columns = [
   { id: 'name', label: 'Country', minWidth: 170 },
@@ -39,17 +42,19 @@ function createData(name, code, population, size, density) {
 const useStyles = makeStyles({
   root: {
     width: '100%',
+    margin: 20,
   },
   container: {
-    maxHeight: 440,
+    maxHeight: 600,
   },
 });
 
-export default function StickyHeadTable(props) {
+const StickyHeadTable = (props) => {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const { data } = props;
+  const data = props.profiles;
+
   const rows = [];
   if (data)
     data.forEach((e) => {
@@ -115,4 +120,11 @@ export default function StickyHeadTable(props) {
       />
     </Paper>
   );
-}
+};
+
+const mapStateToProps = (state) => ({
+  profile: state.auth.user,
+  profiles: state.auth.users,
+});
+
+export default connect(mapStateToProps)(StickyHeadTable);

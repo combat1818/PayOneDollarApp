@@ -128,7 +128,7 @@ const Analytics = (props) => {
     //NEED TO UPDATE REGISTER FORM TO INCLUDE FLAG- BOTH FRONT AND BACKEND
 
     if (selectedProperty == 'Membership') {
-      let copiedArray = props.location.state.countriesData.filter(
+      let copiedArray = props.countriesData.filter(
         (entry) =>
           Number(entry.age) >= ageInterval[0] &&
           Number(entry.age) <= ageInterval[1]
@@ -206,7 +206,7 @@ const Analytics = (props) => {
     } else if (selectedProperty == 'Country') {
       console.log('con');
 
-      let copiedArray = props.location.state.countriesData.filter(
+      let copiedArray = props.countriesData.filter(
         (entry) =>
           Number(entry.age) >= ageInterval[0] &&
           Number(entry.age) <= ageInterval[1]
@@ -267,7 +267,7 @@ const Analytics = (props) => {
     } else if (selectedProperty == 'Flag') {
       console.log('flag');
 
-      let copiedArray = props.location.state.countriesData.filter(
+      let copiedArray = props.countriesData.filter(
         (entry) =>
           Number(entry.age) >= ageInterval[0] &&
           Number(entry.age) <= ageInterval[1]
@@ -320,7 +320,7 @@ const Analytics = (props) => {
       chart.legend = new am4charts.Legend();
     } else if (selectedProperty == 'Age') {
       console.log('tutej');
-      let copiedArray = props.location.state.countriesData;
+      let copiedArray = props.countriesData;
 
       if (!selectedCountries.includes('All')) {
         console.log('There is a filer on countries');
@@ -434,154 +434,151 @@ const Analytics = (props) => {
   };
 
   return (
-    <div id='root' className={classes.container}>
-      <Navbar backIcon={true} />
-      <div className={classes.bodyContainer}>
-        <div className={classes.controlsPanel}>
-          <div className={classes.chartOptionsContainer}>
-            <Typography variant='h4' component='h4' gutterBottom>
-              Pie Chart Options
-            </Typography>
-            <FormControl>
-              <InputLabel id='propertySelect'>Property to chart</InputLabel>
-              <Select
-                labelId='propertySelect'
-                id='demo-mutiple-name'
-                //value={personName}
-                onChange={handleSelectedPropertyChange}
-                variant='outlined'
-                defaultValue={'Membership'}
-                input={<Input />}
-                MenuProps={{
-                  PaperProps: {
-                    style: {
-                      maxHeight: 300,
-                      width: 250,
-                    },
+    <div className={classes.bodyContainer}>
+      <div className={classes.controlsPanel}>
+        <div className={classes.chartOptionsContainer}>
+          <Typography variant='h4' component='h4' gutterBottom>
+            Pie Chart Options
+          </Typography>
+          <FormControl>
+            <InputLabel id='propertySelect'>Property to chart</InputLabel>
+            <Select
+              labelId='propertySelect'
+              id='demo-mutiple-name'
+              //value={personName}
+              onChange={handleSelectedPropertyChange}
+              variant='outlined'
+              defaultValue={'Membership'}
+              input={<Input />}
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    maxHeight: 300,
+                    width: 250,
                   },
-                }}
-                className={classes.propertySelect}
-              >
-                <MenuItem value={'Membership'}>Membership</MenuItem>
-                <MenuItem value={'Country'}>Country</MenuItem>
-                <MenuItem value={'Age'}>Age</MenuItem>
-                <MenuItem value={'Flag'}>Flag</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControl>
-              <InputLabel id='countrySelect'>Select Countries</InputLabel>
-              <Select
-                labelId='countrySelect'
-                id='demo-mutiple-name'
-                value={selectedCountries}
-                onChange={handleSelectedCountriesChange}
-                defaultValue={selectedCountries}
-                multiple
-                variant='outlined'
-                input={<Input />}
-                MenuProps={{
-                  PaperProps: {
-                    style: {
-                      maxHeight: 300,
-                      width: 250,
-                    },
+                },
+              }}
+              className={classes.propertySelect}
+            >
+              <MenuItem value={'Membership'}>Membership</MenuItem>
+              <MenuItem value={'Country'}>Country</MenuItem>
+              <MenuItem value={'Age'}>Age</MenuItem>
+              <MenuItem value={'Flag'}>Flag</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl>
+            <InputLabel id='countrySelect'>Select Countries</InputLabel>
+            <Select
+              labelId='countrySelect'
+              id='demo-mutiple-name'
+              value={selectedCountries}
+              onChange={handleSelectedCountriesChange}
+              defaultValue={selectedCountries}
+              multiple
+              variant='outlined'
+              input={<Input />}
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    maxHeight: 300,
+                    width: 250,
                   },
-                }}
-                className={classes.propertySelect}
-              >
-                <MenuItem key={'All'} value={'All'}>
-                  All
+                },
+              }}
+              className={classes.propertySelect}
+            >
+              <MenuItem key={'All'} value={'All'}>
+                All
+              </MenuItem>
+              {COUNTRIES.map((country) => (
+                <MenuItem key={country.code} value={country.name}>
+                  {country.name}
                 </MenuItem>
-                {COUNTRIES.map((country) => (
-                  <MenuItem key={country.code} value={country.name}>
-                    {country.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <FormControl>
-              <InputLabel id='membershipSelect'>Membership</InputLabel>
-              <Select
-                labelId='membershipSelect'
-                id='demo-mutiple-name'
-                value={selectedMembership}
-                onChange={handleSelectedMembershipChange}
-                variant='outlined'
-                defaultValue={'All'}
-                multiple
-                input={<Input />}
-                MenuProps={{
-                  PaperProps: {
-                    style: {
-                      maxHeight: 300,
-                      width: 250,
-                    },
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl>
+            <InputLabel id='membershipSelect'>Membership</InputLabel>
+            <Select
+              labelId='membershipSelect'
+              id='demo-mutiple-name'
+              value={selectedMembership}
+              onChange={handleSelectedMembershipChange}
+              variant='outlined'
+              defaultValue={'All'}
+              multiple
+              input={<Input />}
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    maxHeight: 300,
+                    width: 250,
                   },
-                }}
-                className={classes.propertySelect}
-              >
-                <MenuItem value={'All'}>All</MenuItem>
-                <MenuItem value={'1'}>Bronze</MenuItem>
-                <MenuItem value={'2'}>Silver</MenuItem>
-                <MenuItem value={'3'}>Gold</MenuItem>
-              </Select>
-            </FormControl>
+                },
+              }}
+              className={classes.propertySelect}
+            >
+              <MenuItem value={'All'}>All</MenuItem>
+              <MenuItem value={'1'}>Bronze</MenuItem>
+              <MenuItem value={'2'}>Silver</MenuItem>
+              <MenuItem value={'3'}>Gold</MenuItem>
+            </Select>
+          </FormControl>
 
-            <FormControl>
-              <InputLabel id='propertySelect'>Flag</InputLabel>
-              <Select
-                labelId='flagSelect'
-                id='demo-mutiple-name'
-                //value={personName}
-                onChange={handleSelectedFlagChange}
-                variant='outlined'
-                defaultValue={'Both'}
-                input={<Input />}
-                MenuProps={{
-                  PaperProps: {
-                    style: {
-                      maxHeight: 300,
-                      width: 250,
-                    },
+          <FormControl>
+            <InputLabel id='propertySelect'>Flag</InputLabel>
+            <Select
+              labelId='flagSelect'
+              id='demo-mutiple-name'
+              //value={personName}
+              onChange={handleSelectedFlagChange}
+              variant='outlined'
+              defaultValue={'Both'}
+              input={<Input />}
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    maxHeight: 300,
+                    width: 250,
                   },
-                }}
-                className={classes.propertySelect}
-              >
-                <MenuItem value={'Both'}>Both</MenuItem>
-                <MenuItem value={'M'}>M</MenuItem>
-                <MenuItem value={'F'}>F</MenuItem>
-              </Select>
+                },
+              }}
+              className={classes.propertySelect}
+            >
+              <MenuItem value={'Both'}>Both</MenuItem>
+              <MenuItem value={'M'}>M</MenuItem>
+              <MenuItem value={'F'}>F</MenuItem>
+            </Select>
+          </FormControl>
+          <div className={classes.slider}>
+            <FormControl>
+              <InputLabel id='ageSelect'>Age Interval</InputLabel>
+              <Slider
+                value={ageInterval}
+                onChange={handleSetAgeInterval}
+                valueLabelDisplay='auto'
+                aria-labelledby='range-slider'
+                getAriaValueText={valuetext}
+                defaultValue={[0, 100]}
+                className={classes.slider}
+                //labelId='ageSelect'
+              />
             </FormControl>
-            <div className={classes.slider}>
-              <FormControl>
-                <InputLabel id='ageSelect'>Age Interval</InputLabel>
-                <Slider
-                  value={ageInterval}
-                  onChange={handleSetAgeInterval}
-                  valueLabelDisplay='auto'
-                  aria-labelledby='range-slider'
-                  getAriaValueText={valuetext}
-                  defaultValue={[0, 100]}
-                  className={classes.slider}
-                  //labelId='ageSelect'
-                />
-              </FormControl>
-            </div>
-            <div className={classes.button}>
-              <Button variant='contained' color='primary' onClick={handleClick}>
-                Create Chart
-              </Button>
-            </div>
+          </div>
+          <div className={classes.button}>
+            <Button variant='contained' color='primary' onClick={handleClick}>
+              Create Chart
+            </Button>
           </div>
         </div>
-        <div className={classes.chartPanel}>
-          <div className={classes.chartHeaderContainer}>
-            <Typography variant='h4' component='h4' gutterBottom>
-              {selectedProperty} Chart
-            </Typography>
-            <div className={classes.chartContainerWrapper}>
-              <div id='chartdiv' className={classes.chartContainer}></div>
-            </div>
+      </div>
+      <div className={classes.chartPanel}>
+        <div className={classes.chartHeaderContainer}>
+          <Typography variant='h4' component='h4' gutterBottom>
+            {selectedProperty} Chart
+          </Typography>
+          <div className={classes.chartContainerWrapper}>
+            <div id='chartdiv' className={classes.chartContainer}></div>
           </div>
         </div>
       </div>

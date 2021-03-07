@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -22,247 +22,141 @@ import Copyright from '../layout/Copyright';
 
 import Navbar from '../layout/Navbar';
 import Table from './Table';
+import WorldMap from './WorldMap';
+import Analytics from './Analytics';
+import About from './About';
+import Users from './Users';
+
 import Image1 from '../../img/charts.png'; // Import using relative path
 import Image2 from '../../img/worldMapDashboard.png'; // Import using relative path
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    minHeight: '100vh',
-    minWidth: '100vw',
     display: 'flex',
+    height: '100vh',
     flexDirection: 'column',
-    backgroundColor: '#fcba03',
   },
   nav: {},
-  counters: { flexGrow: 0 },
-  card: {
-    height: 200,
-    width: 200,
+  mainBoard: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
     margin: 10,
-    textAlign: 'center',
-  },
-  counterHeader: {
-    height: 40,
-    backgroundColor: '#3f51b5',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontSize: 25,
-    color: 'white',
-  },
-  counterContent: {
-    display: 'flex',
-    flexGrow: 1,
-    height: 110,
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontSize: 80,
-  },
-  counterLink: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 30,
-    fontSize: 20,
-    backgroundColor: '#586fed',
-    borderRadius: 20,
-    margin: 15,
-    color: 'white',
-  },
-  sections: {
-    flexGrow: 2,
-    display: 'flex',
-  },
-  sectionHeader: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 40,
-    fontSize: 35,
-    backgroundColor: '#3f51b5',
-    color: 'white',
-    margin: 10,
+    boxShadow: '0 1px 3px 0px ',
     borderRadius: 10,
   },
-  section1: {
-    flex: 1,
-    minHeight: 400,
-    margin: 10,
-    //backgroundImage: `url(${Image1})`,
-    //backgroundSize: 'cover',
-  },
-  section2: {
-    flex: 1,
-    minHeight: 400,
-    margin: 10,
-    //backgroundImage: `url(${Image2})`,
-    //backgroundSize: 'cover',
-  },
-  image: {
-    width: '100%',
-    height: 400,
-    objectFit: 'contain',
-  },
-  imageContainer: {
+  switches: {
     display: 'flex',
-    flexDirection: 'column',
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    marginLeft: 10,
+    height: 40,
+    marginRight: 10,
   },
-  tfContainer: {
-    flexGrow: 0,
+  switch: {
+    color: 'white',
+    //borderTop: '80px solid white',
+    borderLeft: '15px solid transparent',
+  },
+  panels: {
     display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-end',
+    flexDirection: 'row',
+    height: '100%',
   },
-  table: { margin: 10 },
-  footer: {
-    backgroundColor:
-      theme.palette.type === 'light'
-        ? theme.palette.grey[200]
-        : theme.palette.grey[800],
+  leftPanel: {
+    display: 'flex',
+    flex: 2,
+    boxShadow: '0 1px 3px 0px ',
+    borderRadius: 10,
+    margin: 10,
+    marginTop: 0,
   },
-  link: {
-    textDecoration: 'none',
+  rightPanel: {
+    display: 'flex',
+    flex: 3,
+    boxShadow: '0 1px 3px 0px ',
+    borderRadius: 10,
+    margin: 10,
+    marginTop: 0,
   },
 }));
 
 const Dashboard = ({ profile, profiles }) => {
   const classes = useStyles();
-  let bronzeMembership = 0;
-  let silverMembership = 0;
-  let goldMembership = 0;
-  if (profiles != null) {
-    profiles.forEach((profile) => {
-      if (profile.membership == '1') bronzeMembership++;
-      else if (profile.membership == '2') silverMembership++;
-      else if (profile.membership == '3') goldMembership++;
-    });
-  }
+
+  const [currentView, setCurrentView] = useState(1);
+
+  const handleViewChange = (e) => {
+    setCurrentView(e);
+  };
+
+  console.log(currentView);
   return (
     <div className={classes.root}>
       <div className={classes.nav}>
         <Navbar />
       </div>
-
-      <Grid
-        container
-        direction='row'
-        justify='center'
-        className={classes.counters}
-      >
-        <Grid item>
-          <Paper className={classes.card} elevation={5}>
-            <div className={classes.counterHeader}>Bronze Members:</div>
-            <div className={classes.counterContent}>
-              {profile != null && parseInt(profile.membership) >= 1
-                ? bronzeMembership
-                : '?'}
-            </div>
-            {profile != null && parseInt(profile.membership) < 1 ? (
-              <Link to='/pricing' className={classes.link}>
-                <div className={classes.counterLink}>Upgrade</div>
-              </Link>
-            ) : (
-              ''
-            )}
-          </Paper>
-        </Grid>
-        <Grid item>
-          <Paper className={classes.card} elevation={5}>
-            <div className={classes.counterHeader}>Silver Members:</div>
-            <div className={classes.counterContent}>
-              {profile != null && parseInt(profile.membership) >= 2
-                ? silverMembership
-                : '?'}
-            </div>
-            {profile != null && parseInt(profile.membership) < 2 ? (
-              <Link to='/pricing' className={classes.link}>
-                <div className={classes.counterLink}>Upgrade</div>
-              </Link>
-            ) : (
-              ''
-            )}
-          </Paper>
-        </Grid>
-        <Grid item>
-          <Paper className={classes.card} elevation={5}>
-            <div className={classes.counterHeader}>Gold Members:</div>
-            <div className={classes.counterContent}>
-              {profile != null && parseInt(profile.membership) >= 3
-                ? goldMembership
-                : '?'}
-            </div>
-            {profile != null && parseInt(profile.membership) < 3 ? (
-              <Link to='/pricing' className={classes.link}>
-                <div className={classes.counterLink}>Upgrade</div>
-              </Link>
-            ) : (
-              ''
-            )}
-          </Paper>
-        </Grid>
-      </Grid>
-
-      <Grid container className={classes.sections} alignItems='center'>
-        <Grid item md={6} xs={12}>
-          <Paper elevation={5} className={classes.section1}>
-            <Link
-              to={{
-                pathname: '/analytics',
-                state: {
-                  countriesData: profiles,
-                },
-              }}
-              className={classes.link}
+      <div className={classes.mainBoard}>
+        <div className={classes.switches}>
+          <div className={classes.switch}>
+            <Button
+              variant='contained'
+              color='primary'
+              className={classes.heatButton}
+              value={1}
+              onClick={(e) => handleViewChange(1)}
             >
-              <div className={classes.sectionHeader}>Analytics</div>
-              <div className={classes.imageContainer}>
-                <img src={Image1} className={classes.image}></img>
-              </div>
-            </Link>
-          </Paper>
-        </Grid>
-        <Grid item md={6} xs={12}>
-          <Paper elevation={5} className={classes.section2}>
-            <Link
-              to={{
-                pathname: '/worldmap',
-                state: {
-                  countriesData: profiles,
-                },
-              }}
-              className={classes.link}
+              About
+            </Button>
+          </div>
+          <div className={classes.switch}>
+            <Button
+              variant='contained'
+              color='primary'
+              className={classes.heatButton}
+              value={1}
+              onClick={(e) => handleViewChange(2)}
             >
-              <div className={classes.sectionHeader}>World Map</div>
-              <div className={classes.imageContainer}>
-                <img src={Image2} className={classes.image}></img>
-              </div>
-            </Link>
-          </Paper>
-        </Grid>
-      </Grid>
-
-      <div className={classes.tfContainer}>
-        <div className={classes.table}>
-          <Table data={profiles} />
+              Users
+            </Button>
+          </div>
+          <div className={classes.switch}>
+            <Button
+              variant='contained'
+              color='primary'
+              className={classes.heatButton}
+              value={2}
+              onClick={(e) => handleViewChange(3)}
+            >
+              Pie charts
+            </Button>
+          </div>
+          <div className={classes.switch}>
+            <Button
+              variant='contained'
+              color='primary'
+              className={classes.heatButton}
+              value={3}
+              onClick={(e) => handleViewChange(4)}
+            >
+              Map
+            </Button>
+          </div>
         </div>
-        <div className={classes.footer}>
-          <footer>
-            <Container maxWidth='sm'>
-              <Typography variant='body1'>
-                My sticky footer can be found here.
-              </Typography>
-              <Copyright />
-            </Container>
-          </footer>
+        <div className={classes.panels}>
+          {currentView == 1 ? (
+            <About profile={profile} />
+          ) : currentView == 2 ? (
+            <Users />
+          ) : currentView == 3 ? (
+            <Analytics countriesData={profiles} />
+          ) : (
+            <WorldMap countriesData={profiles} />
+          )}
         </div>
       </div>
     </div>
   );
 };
-
+/*<WorldMap countriesData={profiles} />*/
 const mapStateToProps = (state) => ({
   profile: state.auth.user,
   profiles: state.auth.users,

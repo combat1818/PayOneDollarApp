@@ -44,39 +44,60 @@ function findCountry(id) {
 }
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
-  map: {
-    height: '100vh',
+  root: {
     display: 'flex',
+    width: '100%',
+  },
+  panels: {
+    display: 'flex',
+    flexDirection: 'row',
+    width: '100%',
+    margin: 10,
+    //boxShadow: '0 1px 3px 0px ',
+    borderRadius: 10,
+  },
+  leftPanel: {
+    display: 'flex',
+    flex: 1,
+    boxShadow: '0 1px 3px 0px ',
+    borderRadius: 10,
+    margin: 10,
+    justifyContent: 'center',
+  },
+  rightPanel: {
+    display: 'flex',
+    flex: 2,
     justifyContent: 'center',
     alignItems: 'center',
+    boxShadow: '0 1px 3px 0px ',
+    borderRadius: 10,
+    margin: 10,
+  },
+  map: {
+    display: 'flex',
+    width: '100%',
+    height: '80%',
     padding: 10,
+    justifyContent: 'center',
   },
   chartdiv: {
-    width: '100vw',
-    height: '100vh',
     border: 'solid',
     borderRadius: 20,
+    width: '90%',
   },
   formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
+    //margin: theme.spacing(1),
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
   },
   selectContainer: {
-    display: 'flex',
-    height: 120,
-    justifyContent: 'center',
-    alignItems: 'center',
     padding: 20,
   },
   heatButton: {
-    width: 200,
-    height: 100,
     marginLeft: 10,
     marginRight: 10,
+    width: 100,
   },
 }));
 
@@ -294,8 +315,8 @@ function createHeatMap(props, heatValue) {
     element.name = findCountry(element.id);
   });
   //console.log(props.location.state.countriesData);
-  if (props.location.state.countriesData !== null) {
-    props.location.state.countriesData.forEach((profile) => {
+  if (props.countriesData !== null) {
+    props.countriesData.forEach((profile) => {
       let id = findId(profile.country);
 
       if (id != null) {
@@ -357,38 +378,43 @@ const WorldMap = (props) => {
 
   return (
     <div id='root' className={classes.root}>
-      <Navbar backIcon={true} />
-      <div className={classes.selectContainer}>
-        <Button
-          variant='contained'
-          color='primary'
-          className={classes.heatButton}
-          value={1}
-          onClick={() => setHeatValue(1)}
-        >
-          Bronze
-        </Button>
-        <Button
-          variant='contained'
-          color='primary'
-          className={classes.heatButton}
-          value={2}
-          onClick={() => setHeatValue(2)}
-        >
-          Silver
-        </Button>
-        <Button
-          variant='contained'
-          color='primary'
-          className={classes.heatButton}
-          value={3}
-          onClick={() => setHeatValue(3)}
-        >
-          Gold
-        </Button>
-      </div>
-      <div className={classes.map}>
-        <div id='chartdiv' className={classes.chartdiv}></div>
+      <div className={classes.panels}>
+        <div className={classes.leftPanel}>
+          <div className={classes.selectContainer}>
+            <Button
+              variant='contained'
+              color='primary'
+              className={classes.heatButton}
+              value={1}
+              onClick={() => setHeatValue(1)}
+            >
+              Bronze
+            </Button>
+            <Button
+              variant='contained'
+              color='primary'
+              className={classes.heatButton}
+              value={2}
+              onClick={() => setHeatValue(2)}
+            >
+              Silver
+            </Button>
+            <Button
+              variant='contained'
+              color='primary'
+              className={classes.heatButton}
+              value={3}
+              onClick={() => setHeatValue(3)}
+            >
+              Gold
+            </Button>
+          </div>
+        </div>
+        <div className={classes.rightPanel}>
+          <div className={classes.map}>
+            <div id='chartdiv' className={classes.chartdiv}></div>
+          </div>
+        </div>
       </div>
     </div>
   );
