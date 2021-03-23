@@ -16,107 +16,29 @@ import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles((theme) => ({
-  '@global': {
-    ul: {
-      margin: 0,
-      padding: 0,
-      listStyle: 'none',
-    },
-  },
-  appBar: {
-    borderBottom: `1px solid ${theme.palette.divider}`,
-  },
-  toolbar: {
-    flexWrap: 'wrap',
-  },
-  toolbarTitle: {
-    flexGrow: 1,
-  },
-  link: {
-    margin: theme.spacing(1, 1.5),
-  },
-  heroContent: {
-    height: '100vh',
-    width: '100vw',
-    padding: theme.spacing(8, 0, 6),
-  },
-  text: {
-    color: 'black',
-  },
-  linkContainer: {
-    marginTop: '100px',
-  },
-  linkDivContainer: {
+  root: {
     display: 'flex',
-
-    backgroundColor: '#0b46b5',
-    color: 'white',
-    borderRadius: '10px',
-    height: '75px',
-    width: '150px',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: 'column',
+    height: '100vh',
   },
-  link: {
-    color: 'white',
-    textDecoration: 'none',
-    fontSize: 32,
+  container: {
+    flex: 0.5,
+    backgroundColor: '#202044',
   },
 }));
+
+/*
+<Link to='/register' className={classes.link}>
+                Sign Up
+              </Link>
+              */
 
 const Landing = () => {
   const classes = useStyles();
   return (
-    <React.Fragment>
-      <CssBaseline />
-      {/* Hero unit */}
-      <Container component='main' className={classes.heroContent}>
-        <Typography
-          component='h1'
-          variant='h2'
-          align='center'
-          color='textPrimary'
-          gutterBottom
-          className={classes.text}
-        >
-          Can You Waste One Dollar?
-        </Typography>
-        <Typography
-          variant='h5'
-          align='center'
-          color='textSecondary'
-          component='p'
-          className={classes.text}
-        >
-          Find out where in the World people are able to afford one dollar to
-          find out who else paid one dollar <br />
-          <br /> Use built in analytics to sort them by name, age, country of
-          origin and more! <br /> Check out people who paid for premium features
-        </Typography>
-        <Grid
-          container
-          direction='row'
-          justify='center'
-          spacing={10}
-          className={classes.linkContainer}
-        >
-          <Grid item>
-            <div className={classes.linkDivContainer}>
-              <Link to='/register' className={classes.link}>
-                Sign Up
-              </Link>
-            </div>
-          </Grid>
-          <Grid item>
-            <div className={classes.linkDivContainer}>
-              <Link to='/login' className={classes.link}>
-                Sign In
-              </Link>
-            </div>
-          </Grid>
-        </Grid>
-      </Container>
-    </React.Fragment>
+    <div className={classes.root}>
+      <div className={classes.container}></div>
+    </div>
   );
 };
 

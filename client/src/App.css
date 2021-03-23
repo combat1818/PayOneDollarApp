@@ -5,3 +5,16 @@ body {
   padding: 0;
   overflow-x: hidden;
 }
+
+@font-face {
+  font-family: 'Poppins-Bold';
+  src: local('Poppins-Bold'), url(./fonts/Poppins-Bold.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Poppins-Thin';
+  src: local('Poppins-Thin'), url(./fonts/Poppins-Thin.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Poppins-Light';
+  src: local('Poppins-Light'), url(./fonts/Poppins-Light.ttf) format('truetype');
+}

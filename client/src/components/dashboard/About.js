@@ -37,9 +37,8 @@ const useStyles = makeStyles((theme) => ({
     padding: 10,
     boxShadow: '0 1px 3px 0px ',
     borderRadius: 10,
-    flexDirection: 'row',
+    flexDirection: 'column',
     //alignItems: 'flex-end',
-    justifyContent: 'center',
   },
   rightPanel: {
     display: 'flex',
@@ -53,9 +52,9 @@ const useStyles = makeStyles((theme) => ({
   },
   joinButtonContainer: {
     display: 'flex',
-    alignSelf: 'flex-end',
+    height: '100%',
+    alignItems: 'flex-end',
     width: '100%',
-    justifyContent: 'center',
   },
   joinButton: {
     width: '100%',
@@ -66,6 +65,35 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: 'none',
     width: '100%',
   },
+  counters: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginTop: 40,
+  },
+  counter: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: 200,
+    height: 200,
+    boxShadow: '0 1px 3px 0px ',
+    borderRadius: 10,
+    margin: 5,
+  },
+  counterTitle: {
+    display: 'flex',
+    fontSize: 30,
+    justifyContent: 'center',
+    textAlign: 'center',
+    margin: 5,
+  },
+  counterDisplay: {
+    display: 'flex',
+    flex: 1,
+    justifyContent: 'center',
+    fontSize: 25,
+    alignItems: 'center',
+  },
 }));
 
 const About = (props) => {
@@ -74,6 +102,20 @@ const About = (props) => {
   return (
     <div className={classes.container}>
       <div className={classes.leftPanel}>
+        <div className={classes.counters}>
+          <div className={classes.counter}>
+            <div className={classes.counterTitle}>People who paid 1$:</div>
+            <div className={classes.counterDisplay}>count:</div>
+          </div>
+          <div className={classes.counter}>
+            <div className={classes.counterTitle}>People who paid 10$:</div>
+            <div className={classes.counterDisplay}>count:</div>
+          </div>
+          <div className={classes.counter}>
+            <div className={classes.counterTitle}>People who paid 100$:</div>
+            <div className={classes.counterDisplay}>count:</div>
+          </div>
+        </div>
         <div className={classes.joinButtonContainer}>
           <Link to='/pricing' className={classes.link}>
             <Button
