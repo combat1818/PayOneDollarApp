@@ -4,12 +4,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getAllProfiles } from '../../actions/profile';
 
-import Table from './Table';
-import WorldMap from './WorldMap';
-import Analytics from './Analytics';
-import About from './About';
-import Users from './Users';
-
 import Chart from 'chart.js';
 
 import Image1 from '../../img/charts.png'; // Import using relative path
@@ -18,6 +12,7 @@ import Logo from '../../img/dollarLogo.jpg'; // gives image path
 
 import PrettySidebar from '../dashboard/PrettySidebar';
 import Counter from '../dashboard/Counter';
+import PrettyTable from '../dashboard/PrettyTable';
 
 var styles = {
   root: {
@@ -64,8 +59,7 @@ var styles = {
   },
   firstPanel: {
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: 'column',
     flex: 0.67,
     boxShadow: '1px 3px 1px #9E9E9E',
     backgroundColor: 'white',
@@ -73,7 +67,25 @@ var styles = {
     marginRight: 20,
     borderRadius: 5,
   },
+  chartHeader: {
+    flex: 1,
+    fontSize: 20,
+    fontFamily: 'Poppins-Bold',
+    color: '#cccccc',
+    padding: 20,
+  },
+  seperator: {
+    width: '100%',
+    height: 1,
+    backgroundColor: '#f2f2f2',
+  },
+  chartContainer: {
+    flex: 8,
+    padding: 20,
+  },
   secondPanel: {
+    display: 'flex',
+    flexDirection: 'column',
     flex: 0.32,
     boxShadow: '1px 3px 1px #9E9E9E',
     backgroundColor: 'white',
@@ -91,6 +103,8 @@ var styles = {
     justifyContent: 'space-between',
   },
   firstPanel2: {
+    display: 'flex',
+    flexDirection: 'column',
     flex: 0.67,
     boxShadow: '1px 3px 1px #9E9E9E',
     backgroundColor: 'white',
@@ -99,6 +113,8 @@ var styles = {
     borderRadius: 5,
   },
   secondPanel2: {
+    display: 'flex',
+    flexDirection: 'column',
     flex: 0.32,
     boxShadow: '1px 3px 1px #9E9E9E',
     backgroundColor: 'white',
@@ -127,13 +143,82 @@ const PrettyDashboard = ({ profile, profiles }) => {
     new Chart(ctx, {
       type: 'line',
       data: {
-        labels: [1500, 1600, 1700, 1750, 1800, 1850, 1900, 1950, 1999, 2050],
+        labels: [
+          'Jan',
+          'Feb',
+          'Mar',
+          'Apr',
+          'May',
+          'Jun',
+          'Jul',
+          'Aug',
+          'Sep',
+          'Oct',
+        ],
         datasets: [
           {
-            data: [86, 114, 106, 106, 107, 111, 133, 221, 783, 2478],
+            data: [0, 86, 169, 205, 150, 409, 507, 645, 701, 783, 800],
             label: '',
-            borderColor: '#3e95cd',
+            borderColor: '#5e72e4',
             fill: false,
+          },
+        ],
+      },
+      options: {
+        elements: {
+          point: {
+            radius: 0,
+          },
+        },
+        legend: {
+          display: false,
+        },
+        scales: {
+          xAxes: [
+            {
+              gridLines: {
+                display: false,
+              },
+              ticks: {
+                fontSize: 15,
+                fontFamily: 'Poppins-Light',
+              },
+            },
+          ],
+          yAxes: [
+            {
+              gridLines: {
+                display: false,
+              },
+              ticks: {
+                fontSize: 15,
+                fontFamily: 'Poppins-Light',
+                maxTicksLimit: 6,
+              },
+            },
+          ],
+        },
+      },
+    });
+
+    const ctx1 = document.getElementById('barChart');
+    new Chart(ctx1, {
+      type: 'bar',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Aug', 'May', 'Jun'],
+        datasets: [
+          {
+            label: 'TeamA Score',
+            data: [10, 50, 25, 70, 40, 20],
+            backgroundColor: [
+              '#fb6340',
+              '#fb6340',
+              '#fb6340',
+              '#fb6340',
+              '#fb6340',
+              '#fb6340',
+            ],
+            borderWidth: 1,
           },
         ],
       },
@@ -144,18 +229,57 @@ const PrettyDashboard = ({ profile, profiles }) => {
         scales: {
           xAxes: [
             {
+              offset: 20,
+              barThickness: 15,
+              stacked: true,
               gridLines: {
                 display: false,
+              },
+              ticks: {
+                fontSize: 15,
+                fontFamily: 'Poppins-Light',
+                maxTicksLimit: 6,
               },
             },
           ],
           yAxes: [
             {
+              stacked: true,
               gridLines: {
                 display: false,
               },
+              ticks: {
+                fontSize: 15,
+                fontFamily: 'Poppins-Light',
+                maxTicksLimit: 6,
+              },
             },
           ],
+        },
+      },
+    });
+
+    const ctx2 = document.getElementById('pieChart');
+    new Chart(ctx2, {
+      type: 'doughnut',
+      data: {
+        datasets: [
+          {
+            data: [10, 20, 25],
+            backgroundColor: ['#35AFF1', '#EA6687', '#842ED0'],
+          },
+        ],
+
+        // These labels appear in the legend and in the tooltips when hovering different arcs
+        labels: ['One Dollar', 'Two Dollars', 'Three Dollars'],
+      },
+      options: {
+        cutoutPercentage: 30,
+        legend: {
+          labels: {
+            fontFamily: 'Poppins-Light',
+            fontSize: 15,
+          },
         },
       },
     });
@@ -179,13 +303,48 @@ const PrettyDashboard = ({ profile, profiles }) => {
         </div>
         <div style={styles.firstRow}>
           <div style={styles.firstPanel}>
-            <canvas id='lineChart' style={{ width: '80%', height: '80%' }} />
+            <div style={styles.chartHeader}>
+              <span style={{ marginTop: 20 }}>Site's revenue</span>
+            </div>
+            <div style={styles.seperator}></div>
+            <div
+              style={{
+                flex: 8,
+                padding: 20,
+                display: 'flex',
+                flexDirection: 'column',
+              }}
+            >
+              <canvas id='lineChart' style={{ width: '80%', height: '80%' }} />
+            </div>
           </div>
-          <div style={styles.secondPanel}>asd</div>
+          <div style={styles.secondPanel}>
+            <div style={styles.chartHeader}>
+              <span style={{ marginTop: 20 }}>New Users</span>
+            </div>
+            <div style={styles.seperator}></div>
+            <div style={styles.chartContainer}>
+              <canvas id='barChart' style={{ width: '80%', height: '80%' }} />
+            </div>
+          </div>
         </div>
         <div style={styles.secondRow}>
-          <div style={styles.firstPanel2}>asd</div>
-          <div style={styles.secondPanel2}>asd</div>
+          <div style={styles.firstPanel2}>
+            <div style={styles.chartHeader}>
+              <span style={{ marginTop: 20 }}>Most recent users</span>
+            </div>
+            <div style={styles.seperator}></div>
+            <PrettyTable />
+          </div>
+          <div style={styles.secondPanel2}>
+            <div style={styles.chartHeader}>
+              <span style={{ marginTop: 20 }}>People who wasted</span>
+            </div>
+            <div style={styles.seperator}></div>
+            <div style={styles.chartContainer}>
+              <canvas id='pieChart' style={{ width: '80%', height: '80%' }} />
+            </div>
+          </div>
         </div>
         <div style={styles.footer}>
           <span>
